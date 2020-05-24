@@ -1,20 +1,14 @@
 package leetcode;
 
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Test;
+import org.assertj.core.api.WithAssertions;
+import org.junit.jupiter.api.Test;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-{
-    /**
-     * Rigorous Test :-)
-     */
+
+class AppTest implements WithAssertions {
+
     @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
+    void shouldAnswerWithTrue() {
+        assertThat(1).isEqualTo(2 - 1);
     }
 }
