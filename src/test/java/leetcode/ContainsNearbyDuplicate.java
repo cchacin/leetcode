@@ -58,30 +58,23 @@ class ContainsNearbyDuplicate implements WithAssertions {
 
     boolean containsNearbyDuplicate(int[] nums, int k) {
 
-        HashMap<Integer, List<Integer>> map = new HashMap<>(nums.length);
-        for (int i = 0; i < nums.length; i++) {
+        var map = new HashMap<Integer, List<Integer>>(nums.length);
+
+        for (var i = 0; i < nums.length; i++) {
 
             if (!map.containsKey(nums[i])) {
-                ArrayList<Integer> indexes = new ArrayList<>(1);
-                indexes.add(i);
-                map.put(nums[i], indexes);
+                map.put(nums[i], List.of(i));
             } else {
-                List<Integer> currentIndexes = map.get(nums[i]);
-                List<Integer> indexes = new ArrayList<>(currentIndexes.size() + 1);
-                indexes.addAll(currentIndexes);
+                var indexes = new ArrayList<>(map.get(nums[i]));
                 indexes.add(i);
                 map.put(nums[i], indexes);
 
-                for (List<Integer> idxs : map.values()) {
-                    if (idxs.size() < 2) {
-                        continue;
-                    }
-                    for (int idx = 1; idx < idxs.size(); idx++) {
+                for (var idxs : map.values()) {
+                    for (var idx = 1; idx < idxs.size(); idx++) {
                         if (idxs.get(idx) - idxs.get(idx - 1) <= k) {
                             return true;
                         }
                     }
-
                 }
             }
         }
