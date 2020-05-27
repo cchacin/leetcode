@@ -49,25 +49,16 @@ class MaxProfit implements WithAssertions {
         assertThat(maxProfit(input)).isEqualTo(expected);
     }
 
-    // TODO improve
     int maxProfit(int[] prices) {
-        int max = 0;
-        int diff;
+        var minPrice = Integer.MAX_VALUE;
+        var maxProfit = 0;
 
-        for (int i = 0; i < prices.length; i++) {
-
-            for (int j = i + 1; j < prices.length; j++) {
-
-                if (prices[i] <= prices[j]) {
-                    diff = prices[j] - prices[i];
-
-                    if (diff > max) {
-                        max = diff;
-                    }
-                }
-            }
+        for (var price : prices) {
+            if (price < minPrice)
+                minPrice = price;
+            else if (price - minPrice > maxProfit)
+                maxProfit = price - minPrice;
         }
-
-        return max;
+        return maxProfit;
     }
 }
