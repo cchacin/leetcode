@@ -5,6 +5,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.params.provider.Arguments.of;
@@ -34,9 +37,13 @@ class ContainsNearbyDuplicate implements WithAssertions {
 
     static Stream<Arguments> arguments() {
         return Stream.of(
+                of(new int[]{}, 1, false),
+                of(new int[]{}, 0, false),
+                of(new int[]{1, 2, 3}, 0, false),
                 of(new int[]{1, 2, 3, 1}, 3, true),
                 of(new int[]{1, 0, 1, 1}, 1, true),
-                of(new int[]{1, 2, 3, 1, 2, 3}, 2, false)
+                of(new int[]{1, 2, 3, 1, 2, 3}, 2, false), // Map.of(1, List.of(0,3)
+                of(new int[]{1, 2, 3, 4, 5, 6}, 1, false)
         );
     }
 
@@ -49,15 +56,32 @@ class ContainsNearbyDuplicate implements WithAssertions {
         assertThat(containsNearbyDuplicate(input, k)).isEqualTo(expected);
     }
 
-    // TODO improve
     boolean containsNearbyDuplicate(int[] nums, int k) {
 
+        HashMap<Integer, List<Integer>> map = new HashMap<>(nums.length);
         for (int i = 0; i < nums.length; i++) {
 
-            for (int j = i + 1; j < nums.length; j++) {
+            if (!map.containsKey(nums[i])) {
+                ArrayList<Integer> indexes = new ArrayList<>(1);
+                indexes.add(i);
+                map.put(nums[i], indexes);
+            } else {
+                List<Integer> currentIndexes = map.get(nums[i]);
+                List<Integer> indexes = new ArrayList<>(currentIndexes.size() + 1);
+                indexes.addAll(currentIndexes);
+                indexes.add(i);
+                map.put(nums[i], indexes);
 
-                if (nums[i] == nums[j] && j - i <= k) {
-                    return true;
+                for (List<Integer> idxs : map.values()) {
+                    if (idxs.size() < 2) {
+                        continue;
+                    }
+                    for (int idx = 1; idx < idxs.size(); idx++) {
+                        if (idxs.get(idx) - idxs.get(idx - 1) <= k) {
+                            return true;
+                        }
+                    }
+
                 }
             }
         }
