@@ -40,7 +40,7 @@ class ContainsNearbyDuplicate implements WithAssertions {
                 of(new int[]{1, 2, 3}, 0, false),
                 of(new int[]{1, 2, 3, 1}, 3, true),
                 of(new int[]{1, 0, 1, 1}, 1, true),
-                of(new int[]{1, 2, 3, 1, 2, 3}, 2, false), // Map.of(1, List.of(0,3)
+                of(new int[]{1, 2, 3, 1, 2, 3}, 2, false),
                 of(new int[]{1, 2, 3, 4, 5, 6}, 1, false)
         );
     }
