@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static java.util.stream.IntStream.range;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
-class GoogleCalendar implements WithAssertions {
+class GoogleCalendarTest implements WithAssertions {
 
     /**
      * # Sample input:

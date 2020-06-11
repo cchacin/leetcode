@@ -43,7 +43,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
  * Input: "{[]}"
  * Output: true
  */
-class Parenthesis implements WithAssertions {
+class ParenthesisTest implements WithAssertions {
 
     static Stream<Arguments> arguments() {
         return Stream.of(

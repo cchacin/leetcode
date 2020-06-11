@@ -31,7 +31,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
  * Output: 0
  * Explanation: In this case, no transaction is done, i.e. max profit = 0.
  */
-class MaxProfit implements WithAssertions {
+class MaxProfitTest implements WithAssertions {
 
     static Stream<Arguments> arguments() {
         return Stream.of(

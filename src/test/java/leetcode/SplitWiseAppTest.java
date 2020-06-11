@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static leetcode.SplitWiseApp.Invoice.newInvoice;
-import static leetcode.SplitWiseApp.Item.newItem;
-import static leetcode.SplitWiseApp.Result.newResult;
+import static leetcode.SplitWiseAppTest.Invoice.newInvoice;
+import static leetcode.SplitWiseAppTest.Item.newItem;
+import static leetcode.SplitWiseAppTest.Result.newResult;
 import static org.junit.jupiter.params.provider.Arguments.of;
 
 /*
@@ -49,7 +49,7 @@ Daniel, $24.00
 Carlos, $12.00
   - Sandwish
  */
-class SplitWiseApp implements WithAssertions {
+class SplitWiseAppTest implements WithAssertions {
 
     private static final CurrencyUnit USD = Monetary.getCurrency("USD");
 

@@ -31,7 +31,7 @@ import static org.junit.jupiter.params.provider.Arguments.of;
  * Input: nums = [1,2,3,1,2,3], k = 2
  * Output: false
  */
-class ContainsNearbyDuplicate implements WithAssertions {
+class ContainsNearbyDuplicateTest implements WithAssertions {
 
     static Stream<Arguments> arguments() {
         return Stream.of(
