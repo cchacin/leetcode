@@ -35,13 +35,13 @@ class PairWithTargetSumTest implements WithAssertions {
         );
     }
 
-    static record TestCase(int[]array, int sum, int[]expected) {
-        static TestCase of(int[] array, int sum, int[] expected) {
+    record TestCase(int[]array, int sum, int[]expected) {
+        static TestCase of(final int[] array, final int sum, final int[] expected) {
             return new TestCase(array, sum, expected);
         }
 
         int[] targetSum() {
-            int length = array.length;
+            final int length = array.length;
             for (int i = 0; i < length; i++) {
                 for (int j = length - 1; j > 0; j--) {
                     if (array[i] + array[j] == sum()) {
@@ -56,7 +56,7 @@ class PairWithTargetSumTest implements WithAssertions {
     @ParameterizedTest(name = "targetSum({0}, {1}) should return {2}")
     @MethodSource("arguments")
     void test(
-            TestCase testCase) {
+            final TestCase testCase) {
         assertThat(testCase.targetSum()).isEqualTo(testCase.expected);
     }
 }

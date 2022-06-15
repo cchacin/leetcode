@@ -44,16 +44,16 @@ class MaxProfitTest implements WithAssertions {
     @ParameterizedTest(name = "maxProfit({0}) should return {1}")
     @MethodSource("arguments")
     void test(
-            int[] input,
-            int expected) {
+            final int[] input,
+            final int expected) {
         assertThat(maxProfit(input)).isEqualTo(expected);
     }
 
-    int maxProfit(int[] prices) {
+    int maxProfit(final int[] prices) {
         var minPrice = Integer.MAX_VALUE;
         var maxProfit = 0;
 
-        for (var price : prices) {
+        for (final var price : prices) {
             minPrice = Math.min(minPrice, price);
             maxProfit = Math.max(maxProfit, price - minPrice);
         }

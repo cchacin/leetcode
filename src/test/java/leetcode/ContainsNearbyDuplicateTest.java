@@ -48,15 +48,15 @@ class ContainsNearbyDuplicateTest implements WithAssertions {
     @ParameterizedTest(name = "containsNearbyDuplicate({0}, {1}) should return {2}")
     @MethodSource("arguments")
     void test(
-            int[] input,
-            int k,
-            boolean expected) {
+            final int[] input,
+            final int k,
+            final boolean expected) {
         assertThat(containsNearbyDuplicate(input, k)).isEqualTo(expected);
     }
 
-    boolean containsNearbyDuplicate(int[] nums, int k) {
+    boolean containsNearbyDuplicate(final int[] nums, final int k) {
 
-        var set = new HashSet<Integer>();
+        final var set = new HashSet<Integer>();
         for (var i = 0; i < nums.length; ++i) {
             if (set.contains(nums[i])) return true;
             set.add(nums[i]);

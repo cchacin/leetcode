@@ -56,15 +56,15 @@ class ParenthesisTest implements WithAssertions {
     @ParameterizedTest(name = "isValid({0}) should return {1}")
     @MethodSource("arguments")
     void test(
-            String input,
-            boolean expected) {
+            final String input,
+            final boolean expected) {
         assertThat(isValid(input)).isEqualTo(expected);
     }
 
     boolean isValid(
-            String input) {
-        var stack = new Stack<Character>();
-        for (var c : input.toCharArray()) {
+            final String input) {
+        final var stack = new Stack<Character>();
+        for (final var c : input.toCharArray()) {
             if (c == '(')
                 stack.push(')');
             else if (c == '{')

@@ -56,28 +56,28 @@ class GoogleCalendarTest implements WithAssertions {
     @ParameterizedTest(name = "maxProfit({0}) should return {1}")
     @MethodSource("arguments")
     void test(
-            Calendar one,
-            Calendar two,
-            Time duration,
-            List<Slot> expected) {
-        List<Slot> availability = one.availability(two, duration);
+            final Calendar one,
+            final Calendar two,
+            final Time duration,
+            final List<Slot> expected) {
+        final List<Slot> availability = one.availability(two, duration);
         System.out.println("availability = " + availability);
         assertThat(availability).containsExactlyElementsOf(expected);
     }
 
-    static record Time(int hour, int minutes) {
-        static Time of(int hour, int minutes) {
+    record Time(int hour, int minutes) {
+        static Time of(final int hour, final int minutes) {
             return new Time(hour, minutes);
         }
 
-        static Time of(int hour) {
+        static Time of(final int hour) {
             return new Time(hour, 0);
         }
 
-        static Time fromIndex(int index) {
-            var bd = new BigDecimal(index / 60);
-            var intPart = bd.intValue();
-            var decimalPart = index % 60;
+        static Time fromIndex(final int index) {
+            final var bd = new BigDecimal(index / 60);
+            final var intPart = bd.intValue();
+            final var decimalPart = index % 60;
             return Time.of(intPart, decimalPart);
         }
 
@@ -91,10 +91,10 @@ class GoogleCalendarTest implements WithAssertions {
         }
     }
 
-    static record Slot(Time start, Time end) {
+    record Slot(Time start, Time end) {
         static Slot from(
-                Time start,
-                Time end) {
+                final Time start,
+                final Time end) {
             return new Slot(start, end);
         }
         int duration() {
@@ -107,17 +107,17 @@ class GoogleCalendarTest implements WithAssertions {
         }
     }
 
-    static record Calendar(List<Slot>meetings, Slot bounds) {
+    record Calendar(List<Slot>meetings, Slot bounds) {
 
         static Calendar of(
-                List<Slot>meetings,
-                Slot bounds) {
+                final List<Slot>meetings,
+                final Slot bounds) {
             return new Calendar(meetings, bounds);
         }
 
         List<Slot> availableSlots() {
-            var availableSlots = new ArrayList<Slot>();
-            var firstMeeting = meetings.get(0);
+            final var availableSlots = new ArrayList<Slot>();
+            final var firstMeeting = meetings.get(0);
             if (bounds.start.toIndex() < firstMeeting.start.toIndex()) {
                 availableSlots.add(Slot.from(bounds.start, firstMeeting.start));
             }
@@ -127,7 +127,7 @@ class GoogleCalendarTest implements WithAssertions {
                     .filter(slot -> slot.duration() > 0)
                     .forEach(availableSlots::add);
 
-            var lastMeeting = meetings.get(meetings.size() - 1);
+            final var lastMeeting = meetings.get(meetings.size() - 1);
             if (bounds.end.toIndex() > lastMeeting.end.toIndex()) {
                 availableSlots.add(Slot.from(lastMeeting.end, bounds.end));
             }
@@ -135,20 +135,20 @@ class GoogleCalendarTest implements WithAssertions {
             return availableSlots;
         }
 
-        List<Slot> availability(Calendar calendar, Time duration) {
+        List<Slot> availability(final Calendar calendar, final Time duration) {
             System.out.println(this.availableSlots());
             System.out.println(this.meetings);
             System.out.println(calendar.availableSlots());
             System.out.println(calendar.meetings);
 
-            var minutesPerDay = new int[1440];
+            final var minutesPerDay = new int[1440];
 
             this.availableSlots().forEach(slot ->
                     range(slot.start.toIndex(), slot.end.toIndex())
                             .forEach(i -> minutesPerDay[i] = 1));
 
-            var start = new AtomicInteger(-1);
-            var result = new ArrayList<Slot>();
+            final var start = new AtomicInteger(-1);
+            final var result = new ArrayList<Slot>();
             calendar.availableSlots().forEach(slot ->
                     range(slot.start.toIndex(), slot.end.toIndex())
                             .forEach(i -> {
@@ -157,7 +157,7 @@ class GoogleCalendarTest implements WithAssertions {
                                 } else {
                                     minutesPerDay[i] = 2;
                                     if (start.intValue() != -1) {
-                                        var newSlot = Slot.from(
+                                        final var newSlot = Slot.from(
                                                 Time.fromIndex(start.intValue()),
                                                 Time.fromIndex(i)
                                         );
@@ -177,7 +177,7 @@ class GoogleCalendarTest implements WithAssertions {
                                 start.set(i);
                             }
                         } else if (start.intValue() != -1) {
-                            var newSlot = Slot.from(
+                            final var newSlot = Slot.from(
                                     Time.fromIndex(start.intValue()),
                                     Time.fromIndex(i)
                             );

@@ -85,59 +85,59 @@ class SplitWiseAppTest implements WithAssertions {
     @ParameterizedTest(name = "myFunction({0}) should return {1}")
     @MethodSource("arguments")
     void test(
-            Invoice input,
-            List<Result> expected) {
+            final Invoice input,
+            final List<Result> expected) {
         assertThat(input.calculate()).containsExactlyInAnyOrderElementsOf(expected);
     }
 
-    static Money usDollars(double amount) {
+    static Money usDollars(final double amount) {
         return Money.of(amount, USD);
     }
 
-    static record Item(
+    record Item(
             String name,
             MonetaryAmount price) {
         static Item newItem(
-                String name,
-                Money price) {
+                final String name,
+                final Money price) {
             return new Item(name, price);
         }
     }
 
-    static record Result(
+    record Result(
             String name,
             String total,
             List<String>items) {
 
         static Result newResult(
-                String name,
-                String total,
-                String... items) {
+                final String name,
+                final String total,
+                final String... items) {
             return new Result(name, total, Arrays.asList(items));
         }
 
         static Result newResult(
-                String name,
-                String total,
-                List<String> items) {
+                final String name,
+                final String total,
+                final List<String> items) {
             return new Result(name, total, items);
         }
     }
 
-    static record Invoice(
+    record Invoice(
             Map<String, List<Item>>rows,
             int tax,
             int tip) {
 
         static Invoice newInvoice(
-                Map<String, List<Item>> rows,
-                int tax,
-                int tip) {
+                final Map<String, List<Item>> rows,
+                final int tax,
+                final int tip) {
             return new Invoice(rows, tax, tip);
         }
 
         List<Result> calculate() {
-            var total = rows().entrySet()
+            final var total = rows().entrySet()
                     .stream()
                     .flatMap(entry -> entry.getValue().stream())
                     .map(Item::price)
@@ -146,7 +146,7 @@ class SplitWiseAppTest implements WithAssertions {
 
             return rows().entrySet().stream()
                     .map(entry -> {
-                        var totalPerPerson = entry.getValue()
+                        final var totalPerPerson = entry.getValue()
                                 .stream()
                                 .map(Item::price)
                                 .reduce(MonetaryAmount::add)
