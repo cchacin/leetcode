@@ -1,0 +1,30 @@
+name: Maven Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+jobs:
+  build:
+    name: "Maven Build"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Sources"
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: "Setup JDK"
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: 20
+          cache: "maven"
+      - name: "Build with Maven"
+        run: ./mvnw verify
